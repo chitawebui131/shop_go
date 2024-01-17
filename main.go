@@ -15,6 +15,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	//	"github.com/shopspring/decimal"
+	"github.com/chitawebui131/shop_go/categories"
 	"github.com/chitawebui131/shop_go/user"
 )
 
@@ -486,6 +487,7 @@ func main() {
 
 	productService := &ProductService{DB: db}
 	userSvc := &user.UserService{DB: db}
+	catSvc := &categories.CatSetvices{DB: db}
 
 	// Додавання middleware для логування запитів
 	r.Use(middleware.Logger)
@@ -504,11 +506,11 @@ func main() {
 		r.Delete("/{id}", userSvc.DeleteUser)
 	})
 	r.Route("/cat", func(r chi.Router) {
-		r.Get("/", userSvc.GetUsers)
-		r.Get("/{id}", userSvc.GetUser)
-		r.Post("/", userSvc.CreateUser)
-		r.Put("/{id}", userSvc.UpdateUser)
-		r.Delete("/{id}", userSvc.DeleteUser)
+		r.Get("/", catSvc.GetCats)
+		r.Get("/{id}", catSvc.GetCat)
+		r.Post("/", catSvc.CreateCat)
+		r.Put("/{id}", catSvc.UpdateCat)
+		r.Delete("/{id}", catSvc.DeleteCat)
 	})
 
 	// Запуск сервера на порту 8080
